@@ -5,7 +5,7 @@ Water Jug Problem implemented in Python with pseudocode, explanation, and exampl
 The Water Jug Problem is a famous example in Artificial Intelligence (AI) that demonstrates how search algorithms can be used to solve constraint satisfaction problems.
 The task is to measure exactly 4 liters of water using a 3-liter jug and a 5-liter jug.
 
-🔹 Problem Statement
+ * Problem Statement
 
 We have two jugs:
 
