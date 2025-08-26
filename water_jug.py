@@ -1,39 +1,35 @@
-from collections import deque
-
-def water_jug_problem(jug1, jug2, target):
-    # Queue for BFS
+def water_jug_problem():
+    # capacities
+    jug_a, jug_b = 4, 3
     visited = set()
-    queue = deque([(0, 0)])  # (jug1_water, jug2_water)
+    stack = [(0, 0)]  # initial state (A=0, B=0)
 
-    while queue:
-        x, y = queue.popleft()
-
-        # If target found
-        if x == target or y == target:
-            print("Solution found: Jug1 =", x, "Jug2 =", y)
-            return True
-
-        # If already visited, skip
-        if (x, y) in visited:
+    while stack:
+        a, b = stack.pop()
+        if (a, b) in visited:
             continue
-        visited.add((x, y))
+        visited.add((a, b))
+        print(f"Jug A: {a}L, Jug B: {b}L")
 
-        # Possible states
-        next_states = [
-            (jug1, y),          # Fill Jug1
-            (x, jug2),          # Fill Jug2
-            (0, y),             # Empty Jug1
-            (x, 0),             # Empty Jug2
-            (x - min(x, jug2-y), y + min(x, jug2-y)),  # Pour Jug1 -> Jug2
-            (x + min(y, jug1-x), y - min(y, jug1-x))   # Pour Jug2 -> Jug1
+        # Goal: 2 liters in Jug A
+        if a == 2:
+            print("Goal reached!")
+            return
+
+        # possible moves
+        moves = [
+            (jug_a, b),         # Fill Jug A
+            (a, jug_b),         # Fill Jug B
+            (0, b),             # Empty Jug A
+            (a, 0),             # Empty Jug B
+            (min(a + b, jug_a), a + b - min(a + b, jug_a)),  # Pour B -> A
+            (a + b - min(a + b, jug_b), min(a + b, jug_b))   # Pour A -> B
         ]
 
-        for state in next_states:
-            if state not in visited:
-                queue.append(state)
+        for move in moves:
+            if move not in visited:
+                stack.append(move)
 
-    print("No solution possible")
-    return False
 
-# Example run
-water_jug_problem(4, 3, 2)
+if __name__ == "__main__":
+    water_jug_problem()
